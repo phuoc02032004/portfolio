@@ -28,7 +28,7 @@ export default function Home() {
         originX={originPosition.x} // Pass originX to Sidebar
         originY={originPosition.y} // Pass originY to Sidebar
       />
-      <div> hello</div>
+      <div> hello day</div>
     </div>
   );
 }

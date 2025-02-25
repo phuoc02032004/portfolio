@@ -17,9 +17,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}  
         script: |
           cd /home/portfolio
-          git fetch origin
-          git checkout production
-          git pull
-          npm install
-          npm run build
-          pm2 reload portfolio
+          sudo git fetch origin
+          sudo git checkout production
+          sudo git pull
+          sudo npm install
+          sudo npm run build
+          sudo pm2 reload portfolio
