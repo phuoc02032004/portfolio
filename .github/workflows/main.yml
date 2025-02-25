@@ -13,8 +13,8 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
         port: 22
+        key: ${{ secrets.SSH_PRIVATE_KEY }}  
         script: |
           cd /home/portfolio
           git fetch origin
@@ -23,5 +23,3 @@ jobs:
           npm install
           npm run build
           pm2 reload portfolio
-            
-          
