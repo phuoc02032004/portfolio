@@ -1,34 +1,46 @@
-// page.tsx
 "use client";
 
 import Header from "@/components/layouts/Header";
 import Sidebar from "@/components/layouts/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Loading from "@/components/Loading/Loading";
 
 export default function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [originPosition, setOriginPosition] = useState({ x: 0, y: 0 }); // State to hold origin position
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [originPosition, setOriginPosition] = useState({ x: 0, y: 0 });
+    const [isLoading, setIsLoading] = useState(true);
+    const [showLoading, setShowLoading] = useState(true);
 
-  const handleOpenSideBar = (originX: number, originY: number) => { // Update handleOpenSideBar to receive origin
-    setOriginPosition({ x: originX, y: originY }); // Set the origin position
-    setIsSidebarOpen(true);
-  };
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+            setTimeout(() => {
+                setShowLoading(false);
+            }, 800); 
+        }, 3000);
+    }, []);
 
-  const handleCloseSideBar = () => {
-    setIsSidebarOpen(false);
-  };
+    const handleOpenSideBar = (originX: number, originY: number) => {
+        setOriginPosition({ x: originX, y: originY });
+        setIsSidebarOpen(true);
+    };
 
-  return (
-    <div className="w-full h-full bg-[#efefed]">
-      <Header handleOpenSidebar={handleOpenSideBar} />
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-        handleCloseSideBar={handleCloseSideBar}
-        originX={originPosition.x} // Pass originX to Sidebar
-        originY={originPosition.y} // Pass originY to Sidebar
-      />
-      <div> hello day</div>
-    </div>
-  );
+    const handleCloseSideBar = () => {
+        setIsSidebarOpen(false);
+    };
+
+    return (
+        <div className="w-full h-full bg-[#efefed]">
+            {showLoading && <Loading isLoading={isLoading} />} 
+            <Header handleOpenSidebar={handleOpenSideBar} />
+            <Sidebar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+                handleCloseSideBar={handleCloseSideBar}
+                originX={originPosition.x}
+                originY={originPosition.y}
+            />
+            <div> hello day</div>
+        </div>
+    );
 }

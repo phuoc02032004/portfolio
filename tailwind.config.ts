@@ -16,6 +16,25 @@ export default {
         'sigmar': ['var(--font-sigmar)', 'sans-serif'],
         'poppins': ['var(--font-poppins)', 'sans-serif'],
       },
+      keyframes: {
+        rotateLetters: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        expandLetters: {
+          '0%': { letterSpacing: '0em' },
+          '100%': { letterSpacing: '0.5em' }, // Điều chỉnh giá trị này
+        },
+        fadeOutLetters: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        'letter-rotate': 'rotateLetters 2s linear infinite',
+        'expand-letters': 'expandLetters 1s ease-out forwards',
+        'fade-out-letters': 'fadeOutLetters 0.5s ease-in forwards',
+      },
     },
   },
   plugins: [],
