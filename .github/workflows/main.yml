@@ -19,7 +19,8 @@ jobs:
           cd /home/portfolio
           git fetch origin
           git checkout production
-          git pull
+          git pull origin production
+          sudo chown -R ubuntu:ubuntu /home/portfolio
           sudo npm install
           sudo npm run build
           sudo pm2 reload portfolio

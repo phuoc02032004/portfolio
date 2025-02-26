@@ -4,6 +4,7 @@ import Header from "@/components/layouts/Header";
 import Sidebar from "@/components/layouts/Sidebar";
 import { useState, useEffect } from "react";
 import Loading from "@/components/Loading/Loading";
+import Card from "@/components/Cards/Card";
 
 export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function Home() {
                 originY={originPosition.y}
             />
             <div> hello day</div>
+            <Card/>
         </div>
     );
 }
