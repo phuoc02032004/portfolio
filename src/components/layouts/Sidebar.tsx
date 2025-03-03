@@ -1,76 +1,213 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import CloseIcon from "@mui/icons-material/Close";
+import HomeIcon from '@mui/icons-material/Home';
+import InfoIcon from '@mui/icons-material/Info';
+import WorkIcon from '@mui/icons-material/Work';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 interface SidebarProps {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: (isOpen: boolean) => void;
-  handleCloseSideBar: () => void;
-  originX: number;
-  originY: number;
+  isOpen: boolean;
+  onClose: () => void;
+  originPosition: { x: number; y: number };
+  darkMode: boolean;
 }
 
+const menuItems = [
+  { id: "home", label: "Home", icon: HomeIcon },
+  { id: "about", label: "About", icon: InfoIcon },
+  { id: "projects", label: "Projects", icon: WorkIcon },
+  { id: "skills", label: "Skills", icon: LightbulbIcon },
+  { id: "testimonials", label: "Testimonials", icon: ReviewsIcon },
+  { id: "contact", label: "Contact", icon: ContactMailIcon },
+] as const;
+
 const Sidebar: React.FC<SidebarProps> = ({
-  isSidebarOpen,
-  handleCloseSideBar,
-  originX,
-  originY,
+  isOpen,
+  onClose,
+  originPosition,
+  darkMode,
 }) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [closeButtonPosition, setCloseButtonPosition] = useState({ x: 0, y: 0 });
+  const [activeItem, setActiveItem] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isSidebarOpen && closeButtonRef.current) {
+    if (isOpen && closeButtonRef.current) {
       const rect = closeButtonRef.current.getBoundingClientRect();
-      // Tính toán tâm chính xác hơn, dựa trên center của bounding box
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       setCloseButtonPosition({ x: centerX, y: centerY });
     }
-  }, [isSidebarOpen]);
 
-  const clipPathValue = isSidebarOpen
-    ? `circle(150% at ${originX}px ${originY}px)`
+    // Xác định section hiện tại khi scroll
+    const handleScroll = () => {
+      const sections = menuItems.map(item => document.getElementById(item.id));
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveItem(menuItems[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isOpen]);
+
+  const clipPathValue = isOpen
+    ? `circle(150% at ${originPosition.x}px ${originPosition.y}px)`
     : `circle(0% at ${closeButtonPosition.x}px ${closeButtonPosition.y}px)`;
+
+  const handleLinkClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    setActiveItem(id);
+    onClose();
+
+    // Scroll đến section sau khi đóng sidebar với một chút delay
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const headerOffset = 80; // Chiều cao của header
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 400); // Tăng delay để đảm bảo sidebar đã đóng
+  };
 
   return (
     <>
-    {isSidebarOpen && (
-      <div
-        onClick={handleCloseSideBar}
-        className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40 transition-opacity duration-1000 ease-out font-poppins"
-      ></div>
-    )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={onClose}
+            className="fixed top-0 left-0 w-full h-full bg-black z-40 font-poppins"
+          />
+        )}
+      </AnimatePresence>
 
-    <aside
-      className={`fixed top-0 left-0 w-full h-full backdrop-blur-md bg-black/70 text-white p-8 flex flex-col justify-center items-center transition-clip-path duration-1000 ease-out z-50`}
-      style={{
-        alignItems: 'center',
-        clipPath: clipPathValue,
-      }}
-    >
-      <button
-        onClick={handleCloseSideBar}
-        className="absolute top-10 right-10 text-gray-300 hover:text-white text-xl" // Quay lại top-5 right-5
-        ref={closeButtonRef}
+      <aside
+        className={`fixed top-0 left-0 w-full h-full backdrop-blur-md ${
+          darkMode ? 'bg-black/80' : 'bg-white/80'
+        } ${darkMode ? 'text-white' : 'text-gray-900'} p-8 flex flex-col justify-center items-center z-50 font-poppins`}
+        style={{
+          clipPath: clipPathValue,
+          transition: "clip-path 1s cubic-bezier(0.77, 0, 0.175, 1)",
+        }}
       >
-        <CloseIcon fontSize="large"/>
-      </button>
+        <button
+          onClick={onClose}
+          className={`absolute top-10 right-10 ${
+            darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'
+          } text-xl transition-colors duration-300`}
+          ref={closeButtonRef}
+        >
+          <CloseIcon fontSize="large" />
+        </button>
 
-      <nav className="flex flex-col items-center space-y-8 font-poppins mt-20">
-        <a href="#" className="text-5xl font-bold hover:text-gray-300 transition-colors duration-200">
-          HOME
-        </a>
-        <a href="#projects" className="text-5xl font-bold hover:text-gray-300 transition-colors duration-200">
-          PROJECT
-        </a>
-        <a href="#contact" className="text-5xl font-bold hover:text-white transition-colors duration-200">
-          CONTACT
-        </a>
-      </nav>
-    </aside>
-  </>
+        <div className="relative">
+          {/* Decorative elements */}
+          <div className="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+          <nav className="flex flex-col items-center space-y-4 relative z-10">
+            {menuItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.5 }}
+              >
+                <motion.a
+                  href={`#${item.id}`}
+                  onClick={(e) => handleLinkClick(e, item.id)}
+                  className={`text-4xl font-bold relative group block items-center space-x-2`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <motion.div
+                    className={`absolute inset-0  rounded-md ${darkMode ? 'bg-gray-100' : 'bg-red-500'}`}
+                    style={{ pointerEvents: 'none' }}
+                    initial={{ scaleX: 0, opacity: 0 }}
+                    animate={{ scaleX: activeItem === item.id ? 1.1 : 0, opacity: activeItem === item.id ? 0.25 : 0 }}
+                    exit={{ scaleX: 0, opacity: 0 }}
+                    whileHover={{ scaleX: 1.1, opacity: 0.25 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                  />
+                  <item.icon fontSize="large" />
+                  <span className="relative z-10 text-3xl">{item.label}</span>
+                </motion.a>
+              </motion.div>
+            ))}
+          </nav>
+        </div>
+
+        {/* Social media links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="absolute bottom-10 flex space-x-6"
+        >
+          <motion.a
+            href="#"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${
+              darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+            } transition-colors duration-300`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </motion.a>
+          <motion.a
+            href="#"
+            whileHover={{ scale: 1.1, rotate: -5 }}
+            whileTap={{ scale: 0.9 }}
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${
+              darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+            } transition-colors duration-300`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </motion.a>
+          <motion.a
+            href="#"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${
+              darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+            } transition-colors duration-300`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+            </svg>
+          </motion.a>
+        </motion.div>
+      </aside>
+    </>
   );
 };
 
