@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { personalInfo } from "@/data/personalInfo";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
-import me from '../../assets/images/toi.jpg'
+import me from '../../assets/images/toi.png'
 
 interface AboutSectionProps {
   darkMode: boolean;
