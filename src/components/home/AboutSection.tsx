@@ -80,7 +80,7 @@ export default function AboutSection({ darkMode }: AboutSectionProps) {
               imageSrc={me.src}
               altText="Phuoc"
               captionText="Phước"
-              imageHeight="200%"
+              imageHeight="100%"
               imageWidth="100%"
               rotateAmplitude={8}
               scaleOnHover={1.2}

@@ -10,9 +10,9 @@ interface HeroSectionProps {
 export default function HeroSection({ darkMode }: HeroSectionProps) {
   const [isMounted, setIsMounted] = useState(false);
   const { scrollY } = useScroll();
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, 250]); // Giảm nhẹ parallax bg
-  const heroTextY = useTransform(scrollY, [0, 300], [0, -100]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, isMounted ? 250 : 0]); // Reduced parallax for mobile
+  const heroTextY = useTransform(scrollY, [0, 300], [0, isMounted ? -100 : 0]); // Reduced text animation for mobile
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, isMounted ? 0 : 1]); // Fade out text on scroll for desktop only
 
   useEffect(() => {
     setIsMounted(true);
@@ -101,21 +101,31 @@ export default function HeroSection({ darkMode }: HeroSectionProps) {
         <div className="absolute top-1/2 left-1/3 w-60 h-60 rounded-full bg-cyan-700 blur-3xl opacity-20 animate-pulse delay-500"></div>
 
         {/* Floating Shapes - Giữ nguyên hoặc giảm nhẹ opacity */}
-        <motion.div
-          animate={{ y: [0, 15, 0], rotate: [0, 5, 0], scale: [1, 1.05, 1] }}
-          transition={{ duration: 7, repeat: Infinity, repeatType: "reverse" }}
-          className="absolute top-1/3 right-1/4 w-24 h-24 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-600 opacity-20 shadow-xl"
-        ></motion.div>
-        <motion.div
-          animate={{ y: [0, -20, 0], rotate: [0, -5, 0], scale: [1, 1.03, 1] }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", delay: 1 }}
-          className="absolute bottom-1/3 left-1/4 w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 to-cyan-500 opacity-20 shadow-xl"
-        ></motion.div>
-        <motion.div
-          animate={{ y: [0, 12, 0], rotate: [0, -3, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
-          className="absolute top-1/2 right-1/3 w-16 h-16 rounded-lg bg-gradient-to-tr from-cyan-300 to-cyan-400 opacity-20 shadow-xl"
-        ></motion.div>
+        {/* Conditionally render floating shapes for desktop only */}
+        {!isMounted && (
+          <>
+            <motion.div
+              animate={{ y: [0, 15, 0], rotate: [0, 5, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 7, repeat: Infinity, repeatType: "reverse" }}
+              className="absolute top-1/3 right-1/4 w-24 h-24 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-600 opacity-20 shadow-xl"
+            ></motion.div>
+            <motion.div
+              animate={{ y: [0, -20, 0], rotate: [0, -5, 0], scale: [1, 1.03, 1] }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", delay: 1 }}
+              className="absolute bottom-1/3 left-1/4 w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 to-cyan-500 opacity-20 shadow-xl"
+            ></motion.div>
+            <motion.div
+              animate={{ y: [0, 12, 0], rotate: [0, -3, 0], scale: [1, 1.08, 1] }}
+              transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
+              className="absolute top-1/2 right-1/3 w-16 h-16 rounded-lg bg-gradient-to-tr from-cyan-300 to-cyan-400 opacity-20 shadow-xl"
+            ></motion.div>
+            <motion.div
+              animate={{ y: [0, -10, 0], rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 9, repeat: Infinity, repeatType: "reverse", delay: 1.5 }}
+              className="absolute bottom-1/2 left-1/3 w-12 h-12 rounded-full bg-gradient-to-bl from-cyan-500 to-cyan-700 opacity-10 shadow-lg"
+            ></motion.div>
+          </>
+        )}
          {/* Thêm 1 shape nhỏ */}
          <motion.div
           animate={{ y: [0, -10, 0], rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
