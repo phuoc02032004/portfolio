@@ -19,7 +19,6 @@ export default function HeroSection({ darkMode }: HeroSectionProps) {
   }, []);
 
   const handleAnimationComplete = () => {
-    // Optional
   };
 
   // Màu sắc
