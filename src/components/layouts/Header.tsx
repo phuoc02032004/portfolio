@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,7 +18,6 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
     [...Array(5)].map(() => ({ left: '0%', top: '0%', randomX: 0 }))
   );
 
-  // Tính vị trí trung tâm của nút menu
   const calculateMenuPosition = useCallback(() => {
     if (menuButtonRef.current) {
       const rect = menuButtonRef.current.getBoundingClientRect();
@@ -30,9 +29,11 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
 
   useEffect(() => {
     calculateMenuPosition();
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-
     window.addEventListener('resize', calculateMenuPosition);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -41,7 +42,6 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
     };
   }, [calculateMenuPosition]);
 
-  // Gán giá trị hiệu ứng span một lần sau khi component mount
   useEffect(() => {
     setIsMounted(true);
     const positions = [...Array(5)].map(() => ({
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
       randomX: Math.random() * 20 - 10,
     }));
     setSpanPositions(positions);
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once on mount
 
   const handleClick = () => {
     handleOpenSidebar(menuPosition.x, menuPosition.y);
@@ -62,15 +62,13 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
       animate={{ y: 0 }}
       transition={{ duration: 2.5, delay: 0.5 }}
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        scrolled
+        scrolled 
           ? 'py-2 bg-gray-900/90 backdrop-blur-lg shadow-lg'
           : 'py-4 bg-transparent'
       }`}
     >
       <nav className="max-w-screen-xl mx-auto px-4">
         <div className="flex items-center justify-between">
-          
-          {/* Logo hiệu ứng chữ + đốm sáng */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -79,16 +77,15 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
           >
             <a href="#" className="relative inline-block">
               <span className="relative z-10 text-3xl font-extrabold font-poppins tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500">
-                HONG PHUOC
+                HONG
+                PHUOC
               </span>
-
-              {/* Glow hover effect */}
+              
               <div className="absolute -inset-2 blur-xl bg-gradient-to-r from-blue-400/20 via-blue-200/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-150 rounded-full"></div>
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 w-full opacity-0 group-hover:opacity-100"></div>
-
-              {/* Bubble animation */}
+              
+              <div className="absolute inset-0 w-full opacity-0 group-hover:opacity-100">
+              </div>
+              
               <div className="absolute -inset-8">
                 {isMounted && spanPositions.map((pos, i) => (
                   <motion.span
@@ -96,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
                     className="absolute w-1 h-1 bg-blue-400/40 rounded-full blur-sm opacity-0 group-hover:opacity-100"
                     animate={{
                       y: [0, -20, 0],
-                      x: [0, pos.randomX, 0],
+                      x: [0, pos.randomX, 0], // Use state value
                       scale: [1, 1.5, 1],
                     }}
                     transition={{
@@ -106,8 +103,8 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
                       ease: "easeInOut",
                     }}
                     style={{
-                      left: pos.left,
-                      top: pos.top,
+                      left: pos.left, // Use state value
+                      top: pos.top,   // Use state value
                     }}
                   />
                 ))}
@@ -115,7 +112,6 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
             </a>
           </motion.div>
 
-          {/* Menu Button */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -134,15 +130,15 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 '&:hover': {
                   background: 'rgba(255, 255, 255, 0.2)',
-                },
+                }
               }}
             >
-              {/* Icon animation */}
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <MenuIcon className="text-white transform transition-transform group-hover:rotate-180 duration-300" />
               </motion.div>
-
-              {/* Hover background effect */}
               <span className="absolute inset-0 bg-blue-500/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
             </Button>
           </motion.div>

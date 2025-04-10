@@ -1,42 +1,41 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { motion, animate } from "framer-motion"; 
+import React, { useEffect, useRef } from "react";
 import CircularText from "@/blocks/TextAnimations/CircularText/CircularText";
 
 const FullScreenWhiteOverlay = () => {
-  const [visible, setVisible] = useState(true);
-  const [animateOut, setAnimateOut] = useState(false);
+  const overlayRef = useRef(null);
 
   useEffect(() => {
-    const hideTimer = setTimeout(() => {
-      setAnimateOut(true); // chạy animation ra ngoài
-    }, 2000);
-
-    const removeTimer = setTimeout(() => {
-      setVisible(false); // unmount khỏi DOM
-    }, 2500); // chờ animation hoàn tất
-
-    return () => {
-      clearTimeout(hideTimer);
-      clearTimeout(removeTimer);
-    };
+    setTimeout(() => { 
+      const animation = animate(
+        overlayRef.current,
+        { clipPath: "inset(0 0 100% 0)" },
+        {
+          duration: 0.5,
+          ease: "easeOut",
+        }
+      );
+      return () => animation.stop();
+    }, 2000); 
   }, []);
 
-  if (!visible) return null;
-
   return (
-    <div
-      className={`fixed top-0 left-0 w-full h-full bg-black z-[50] flex items-center justify-center transition-transform duration-500 ease-out ${
-        animateOut ? "-translate-y-full" : "translate-y-0"
-      }`}
+    
+    <motion.div
+      ref={overlayRef} 
+      className="fixed top-0 left-0 w-full h-full bg-black z-[50] flex items-center justify-center"
+      initial={{ clipPath: "inset(0 0 0 0)" }}
     >
-      <CircularText
+        <CircularText
         text="NGUYEN*HONG*PHUOC*"
         onHover="speedUp"
         spinDuration={20}
         className="custom-class"
       />
-    </div>
+    </motion.div>
+   
   );
 };
 
