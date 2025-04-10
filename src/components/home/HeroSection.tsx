@@ -27,18 +27,12 @@ export default function HeroSection({ darkMode }: HeroSectionProps) {
   // Màu gốc cho tên - Giữ nguyên để làm màu chữ chính
   const nameColor = darkMode ? 'text-cyan-400' : 'text-blue-600';
   // Màu HEX tương ứng để dùng trong text-shadow (Cần khớp với màu Tailwind)
-  const neonColorHexDark = '#22d3ee'; // cyan-400
-  const neonColorHexLight = '#2563eb'; // blue-600
 
   const roleTextColor = darkMode ? 'text-cyan-300' : 'text-blue-700';
   const roleBgColor = darkMode ? 'bg-cyan-900/40 border border-cyan-700/30' : 'bg-blue-100/80';
   const scrollHoverColor = darkMode ? 'group-hover:text-cyan-400' : 'group-hover:text-blue-600';
   const scrollBorderHoverColor = darkMode ? 'group-hover:border-cyan-500' : 'group-hover:border-blue-600';
   const scrollDotHoverColor = darkMode ? 'group-hover:bg-cyan-500' : 'group-hover:bg-blue-600';
-
-  // Định nghĩa chuỗi text-shadow cho hiệu ứng neon
-  const neonShadowDark = `[text-shadow:0_0_5px_${neonColorHexDark},0_0_10px_${neonColorHexDark},0_0_20px_${neonColorHexDark},0_0_40px_${neonColorHexDark},0_0_60px_#06b6d4]`; // Thêm 1 lớp màu cyan-500 đậm hơn chút
-  const neonShadowLight = `[text-shadow:0_0_5px_${neonColorHexLight},0_0_10px_${neonColorHexLight},0_0_20px_${neonColorHexLight},0_0_40px_${neonColorHexLight},0_0_60px_#1d4ed8]`; // Thêm 1 lớp màu blue-700 đậm hơn chút
 
   return (
     <section
