@@ -13,6 +13,11 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [scrolled, setScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [spanPositions, setSpanPositions] = useState(
+    // Default values for SSR to prevent hydration mismatch
+    [...Array(5)].map(() => ({ left: '0%', top: '0%', randomX: 0 }))
+  );
 
   const calculateMenuPosition = useCallback(() => {
     if (menuButtonRef.current) {
@@ -38,6 +43,17 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
     };
   }, [calculateMenuPosition]);
 
+  useEffect(() => {
+    setIsMounted(true);
+    // Generate random positions only on client mount
+    const positions = [...Array(5)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      randomX: Math.random() * 20 - 10,
+    }));
+    setSpanPositions(positions);
+  }, []); // Empty dependency array ensures this runs only once on mount
+
   const handleClick = () => {
     handleOpenSidebar(menuPosition.x, menuPosition.y);
   };
@@ -46,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'py-2 bg-gray-900/90 backdrop-blur-lg shadow-lg'
@@ -73,13 +89,13 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
               </div>
               
               <div className="absolute -inset-8">
-                {[...Array(5)].map((_, i) => (
+                {isMounted && spanPositions.map((pos, i) => (
                   <motion.span
                     key={i}
                     className="absolute w-1 h-1 bg-blue-400/40 rounded-full blur-sm opacity-0 group-hover:opacity-100"
                     animate={{
                       y: [0, -20, 0],
-                      x: [0, Math.random() * 20 - 10, 0],
+                      x: [0, pos.randomX, 0], // Use state value
                       scale: [1, 1.5, 1],
                     }}
                     transition={{
@@ -89,8 +105,8 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
                       ease: "easeInOut",
                     }}
                     style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
+                      left: pos.left, // Use state value
+                      top: pos.top,   // Use state value
                     }}
                   />
                 ))}

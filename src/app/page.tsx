@@ -1,4 +1,3 @@
-// page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -10,7 +9,7 @@ import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import ContactSection from "@/components/home/ContactSection";
-
+import FullScreenWhiteOverlay from '@/components/ui/FullScreenWhiteOverlay';
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -61,6 +60,7 @@ export default function Home() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
+        <FullScreenWhiteOverlay />
         <Header handleOpenSidebar={handleOpenSideBar} />
         <Sidebar
             isOpen={isSidebarOpen}

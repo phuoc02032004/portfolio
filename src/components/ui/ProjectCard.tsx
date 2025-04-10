@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
+import { StaticImageData } from "next/image";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: {
     id: number;
     title: string;
     description: string;
-    image: string;
+    image: string | StaticImageData;
     tags: string[];
     demoUrl: string;
     codeUrl: string;
@@ -25,10 +27,13 @@ export default function ProjectCard({ project, index, darkMode }: ProjectCardPro
       className={`rounded-xl overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-all duration-300`}
     >
       <div className="h-56 bg-gray-200 relative overflow-hidden group">
-        {/* Thay thế bằng ảnh dự án thực tế */}
-        <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-          Ảnh dự án {index + 1}
-        </div>
+        {/* Display actual project image */}
+        <Image
+          src={project.image}
+          alt={project.title}
+          layout="fill"
+          objectFit="cover"
+        />
         
         {/* Overlay khi hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-blue-600 to-purple-600 opacity-0 group-hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">

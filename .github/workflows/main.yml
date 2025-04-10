@@ -20,6 +20,7 @@ jobs:
           git fetch origin
           git checkout production
           git pull origin production
+          sudo chown -R ubuntu:ubuntu .next
           sudo chown -R ubuntu:ubuntu /home/portfolio
           sudo npm install
           sudo npm run build

@@ -9,7 +9,7 @@ interface ContactSectionProps {
 
 export default function ContactSection({ darkMode }: ContactSectionProps) {
   return (
-    <section className={`py-24 px-4 md:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'} relative overflow-hidden`}>
+    <section id="contact" className={`py-24 px-4 md:px-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-50'} relative overflow-hidden`}>
       <div className="max-w-6xl mx-auto relative z-10">
         <SectionHeading
           subtitle="Contact"

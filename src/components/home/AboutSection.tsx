@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { personalInfo } from "@/data/personalInfo";
-import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
-import me from '../../assets/images/toi.png'
+import me from '@/../public/assets/images/toi.png'
+import TiltedCard from "@/blocks/Components/TiltedCard/TiltedCard";
 
 interface AboutSectionProps {
   darkMode: boolean;
@@ -11,7 +11,6 @@ interface AboutSectionProps {
 export default function AboutSection({ darkMode }: AboutSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  
   // Check for mobile viewport
   useEffect(() => {
     const checkMobile = () => {
@@ -93,14 +92,20 @@ export default function AboutSection({ darkMode }: AboutSectionProps) {
             
             <div className="absolute inset-0 flex items-center justify-center p-3">
               <div className={`w-full h-full rounded-2xl overflow-hidden relative ${darkMode ? 'shadow-lg shadow-blue-900/20' : 'shadow-lg shadow-blue-600/20'}`}>
-                
-                <Image 
-                  src={me} 
-                  alt={personalInfo.name} 
-                  fill
-                  sizes="(max-width: 768px) 320px, 360px"
-                  priority
-                  className="object-cover object-top w-full h-full"
+                <TiltedCard
+                  imageSrc={me.src}
+                  altText="Phuoc"
+                  captionText="Phước"
+                  containerHeight="120%"
+                  containerWidth="100%"
+                  imageHeight="100%"
+                  imageWidth="100%"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.2}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  
                 />
               </div>
             </div>

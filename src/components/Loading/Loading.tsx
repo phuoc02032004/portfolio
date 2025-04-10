@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import GIFMa from "@/assets/gif/mama.gif";
 
 export default function Loading({ isLoading }: { isLoading: boolean }) {
@@ -21,7 +22,7 @@ export default function Loading({ isLoading }: { isLoading: boolean }) {
         >
             <div className="flex flex-col items-center justify-center p-4 space-y-4 bg-black rounded-lg shadow-lg w-80 h-80">
                 <div className="">
-                    <img src={GIFMa.src} alt="Loading..." />
+                    <Image src={GIFMa.src} alt="Loading..." width={80} height={80} />
                 </div>
                 <div className="flex text-white">
                     <div className="font-poppins mr-1">LOADING</div>

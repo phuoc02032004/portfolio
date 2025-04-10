@@ -9,7 +9,7 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ darkMode }: ProjectsSectionProps) {
   return (
-    <section className={`py-24 px-4 md:px-8 ${darkMode ? 'bg-gray-900' : 'bg-[#f8f8f6]'} relative`}>
+    <section  id="projects"  className={`py-24 px-4 md:px-8 ${darkMode ? 'bg-gray-900' : 'bg-[#f8f8f6]'} relative`}>
       <div className="max-w-6xl mx-auto">
         <SectionHeading
           subtitle="Projects"
