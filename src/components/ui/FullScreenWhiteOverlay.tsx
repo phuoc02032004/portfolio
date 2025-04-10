@@ -4,20 +4,30 @@ import React, { useEffect, useState } from "react";
 import CircularText from "@/blocks/TextAnimations/CircularText/CircularText";
 
 const FullScreenWhiteOverlay = () => {
-  const [hidden, setHidden] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [animateOut, setAnimateOut] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHidden(true);
+    const hideTimer = setTimeout(() => {
+      setAnimateOut(true); // chạy animation ra ngoài
     }, 2000);
 
-    return () => clearTimeout(timer);
+    const removeTimer = setTimeout(() => {
+      setVisible(false); // unmount khỏi DOM
+    }, 2500); // chờ animation hoàn tất
+
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(removeTimer);
+    };
   }, []);
+
+  if (!visible) return null;
 
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full bg-black z-[50] flex items-center justify-center transition-transform duration-500 ease-out ${
-        hidden ? "-translate-y-full" : "translate-y-0"
+        animateOut ? "-translate-y-full" : "translate-y-0"
       }`}
     >
       <CircularText
