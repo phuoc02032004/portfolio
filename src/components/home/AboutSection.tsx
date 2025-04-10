@@ -114,7 +114,7 @@ export default function AboutSection({ darkMode }: AboutSectionProps) {
               transition={{ staggerChildren: 0.08 }}
               className="flex flex-wrap gap-3"
             >
-              {['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Git'].map((skill) => (
+              {['React JS', 'Next JS', 'TypeScript', 'Tailwind CSS', 'MUI', 'Express JS', 'Git'].map((skill) => (
                 <motion.span
                   key={skill}
                   variants={{

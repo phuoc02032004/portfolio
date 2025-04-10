@@ -15,7 +15,6 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [spanPositions, setSpanPositions] = useState(
-    // Default values for SSR to prevent hydration mismatch
     [...Array(5)].map(() => ({ left: '0%', top: '0%', randomX: 0 }))
   );
 
@@ -45,7 +44,6 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
 
   useEffect(() => {
     setIsMounted(true);
-    // Generate random positions only on client mount
     const positions = [...Array(5)].map(() => ({
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -62,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ handleOpenSidebar }) => {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
+      transition={{ duration: 2.5, delay: 0.5 }}
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'py-2 bg-gray-900/90 backdrop-blur-lg shadow-lg'

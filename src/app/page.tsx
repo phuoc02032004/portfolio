@@ -16,16 +16,20 @@ export default function Home() {
   const [originPosition, setOriginPosition] = useState({ x: 0, y: 0 });
   const [darkMode, setDarkMode] = useState(false);
   const [, setIsLoading] = useState(true);
-    const [, setShowLoading] = useState(true);
+  const [, setShowLoading] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(true); 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-            setTimeout(() => {
-                setShowLoading(false);
-            }, 800); 
-        }, 1000);
-    }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setTimeout(() => {
+        setShowLoading(false);
+        setTimeout(() => { 
+          setShowOverlay(false);
+        }, 2000 + 1000); 
+      }, 800);
+    }, 1000);
+  }, []);
 
   const handleOpenSideBar = (originX: number, originY: number) => {
     setOriginPosition({ x: originX, y: originY });
@@ -60,7 +64,7 @@ export default function Home() {
   return (
     <div className={darkMode ? "dark" : ""}>
       <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
-        <FullScreenWhiteOverlay />
+        {showOverlay && <FullScreenWhiteOverlay />}
         <Header handleOpenSidebar={handleOpenSideBar} />
         <Sidebar
             isOpen={isSidebarOpen}
