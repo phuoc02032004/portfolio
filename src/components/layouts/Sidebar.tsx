@@ -141,7 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <motion.a
                   href={`#${item.id}`}
                   onClick={(e) => handleLinkClick(e, item.id)}
-                  className={`text-4xl font-bold relative group block items-center space-x-2`}
+                  className={`font-bold relative group block items-center space-x-2 text-xl md:text-2xl ${darkMode ? 'text-gray-100 hover:text-white' : 'text-gray-700 hover:text-black'}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

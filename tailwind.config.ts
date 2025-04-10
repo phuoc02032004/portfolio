@@ -15,7 +15,9 @@ export default {
       fontFamily: {
         'sigmar': ['var(--font-sigmar)', 'sans-serif'],
         'poppins': ['var(--font-poppins)', 'sans-serif'],
-      },
+        'righteous': ['var(--font-righteous)', 'sans-serif'],
+        'pridi': ['var(--font-pridi)', 'sans-serif'],
+       },
       keyframes: {
         rotateLetters: {
           '0%': { transform: 'rotate(0deg)' },
@@ -23,7 +25,7 @@ export default {
         },
         expandLetters: {
           '0%': { letterSpacing: '0em' },
-          '100%': { letterSpacing: '0.5em' }, // Điều chỉnh giá trị này
+          '100%': { letterSpacing: '0.5em' },
         },
         fadeOutLetters: {
           '0%': { opacity: '1' },

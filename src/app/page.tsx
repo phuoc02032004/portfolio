@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <div className={darkMode ? "dark" : ""}>
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
+      <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
         <FullScreenWhiteOverlay />
         <Header handleOpenSidebar={handleOpenSideBar} />
         <Sidebar
@@ -69,7 +69,7 @@ export default function Home() {
             darkMode={darkMode}
         />
         
-        <main>
+        <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
           <HeroSection darkMode={darkMode} />
           <AboutSection darkMode={darkMode} />
           <ProjectsSection darkMode={darkMode} />

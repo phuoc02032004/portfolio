@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { Geist, Geist_Mono, Poppins, Righteous, Pridi } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,6 +19,20 @@ const poppinsFont = Poppins({
   display: 'swap',
 });
 
+const righteousFont = Righteous({
+  subsets: ["latin"],
+  weight: ['400'],
+  variable: '--font-righteous',
+  display: 'swap',
+});
+ 
+const pridiFont = Pridi({
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-pridi',
+  display: 'swap',
+});
+
 
 export const metadata: Metadata = {
   title: "Nguyen Hong Phuoc",
@@ -31,9 +45,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-screen bg-[#efefed] poppins.variable">
+    <html lang="en" className="min-h-screen bg-[#efefed] poppins.variable pridiFont.variable">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppinsFont.variable} antialiased  bg-[#efefed]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppinsFont.variable} ${righteousFont.variable} ${pridiFont.variable} antialiased  bg-[#efefed]`}
       >
         {children}
       </body>
