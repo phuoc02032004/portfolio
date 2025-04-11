@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/layouts/Header";
 import Sidebar from "@/components/layouts/Sidebar";
-import Footer from "@/components/home/Footer";
 
 import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
@@ -38,10 +37,6 @@ export default function Home() {
 
   const handleCloseSideBar = () => {
     setIsSidebarOpen(false);
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
   };
   
   useEffect(() => {
@@ -79,7 +74,7 @@ export default function Home() {
           <ProjectsSection darkMode={darkMode} />
           <ContactSection darkMode={darkMode} />
         </main>
-        <Footer darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        {/* <Footer darkMode={darkMode} toggleDarkMode={toggleDarkMode} /> */}
       </div>
     </div>
   );

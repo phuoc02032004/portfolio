@@ -23,7 +23,7 @@ export const projects = [
   {
     id: 3,
     title: "Savile - LMS",
-    description: "Ứng dụng mạng xã hội với tính năng đăng bài, bình luận và nhắn tin trực tiếp.",
+    description: "Savile LMS is an intuitive and powerful Learning Management System designed to simplify the creation, delivery and tracking of training programs. With a user-friendly interface, Savile LMS helps organizations easily manage learning content, track user progress and evaluate effectiveness, thereby optimizing the training experience and results.",
     image: savile,
     tags: ["ReactJS", "FastAPI", "Tailwind", "PostgreSQL", "AWS EC2", "MUI"],
     demoUrl: "https://lms.savilerto.au/student",

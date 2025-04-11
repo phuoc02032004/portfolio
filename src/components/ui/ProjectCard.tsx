@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
+import { FiExternalLink, FiGithub } from "react-icons/fi";
 
 interface ProjectCardProps {
   project: {
@@ -12,69 +13,100 @@ interface ProjectCardProps {
     demoUrl: string;
     codeUrl: string;
   };
-  index: number;
   darkMode: boolean;
 }
 
-export default function ProjectCard({ project, index, darkMode }: ProjectCardProps) {
+export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
+  const cardBg = darkMode
+    ? "bg-gradient-to-br from-gray-800 to-gray-850"
+    : "bg-gradient-to-br from-white to-gray-50";
+  const cardBorder = darkMode
+    ? "border border-gray-700/50"
+    : "border border-gray-200/80";
+  const cardShadow = darkMode
+    ? "shadow-lg shadow-black/20 hover:shadow-2xl hover:shadow-cyan-900/50 translate-y-1"
+    : "shadow-lg shadow-gray-300/40 hover:shadow-2xl hover:shadow-blue-400/50 translate-y-1";
+
+  const tagStyle = darkMode
+    ? "bg-cyan-900/70 text-cyan-200 hover:bg-cyan-800/80"
+    : "bg-blue-100 text-blue-800 hover:bg-blue-200/90";
+
+  const overlayBg = darkMode
+    ? "bg-gradient-to-t from-black/80 via-black/60 to-transparent"
+    : "bg-gradient-to-t from-blue-800/80 via-blue-600/60 to-transparent";
+
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      whileHover={{ y: -10 }}
-      className={`rounded-xl overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-all duration-300`}
+    <motion.div
+      whileHover={{
+        scale: 1.03,
+        y: -8,
+        transition: { type: "spring", stiffness: 300, damping: 15 },
+      }}
+      className={`rounded-2xl font-poppins overflow-hidden ${cardBg} ${cardBorder} ${cardShadow} transition-all duration-300 group flex flex-col h-full`}
     >
-      <div className="h-56 bg-gray-200 relative overflow-hidden group">
-        {/* Display actual project image */}
+      <div className="h-56 w-full relative overflow-hidden cursor-pointer">
         <Image
           src={project.image}
           alt={project.title}
           layout="fill"
           objectFit="cover"
+          className="transition-transform duration-300 ease-in-out group-hover:scale-105"
         />
-        
-        {/* Overlay khi hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-600 to-purple-600 opacity-0 group-hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-          <div className="text-white text-center p-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
-            <p className="font-medium mb-4">Xem chi tiết dự án</p>
+        <div
+          className={`absolute inset-0 ${overlayBg} opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex items-center justify-center p-4`}
+        >
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+            className="text-center"
+          >
             <div className="flex gap-4 justify-center">
-              <a href={project.demoUrl} className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors">Demo</a>
-              <a href={project.codeUrl} className="px-4 py-2 border border-white text-white rounded-lg font-medium hover:bg-white/10 transition-colors">Code</a>
+              <motion.a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold shadow-md hover:bg-blue-700 transition-colors"
+              >
+                <FiExternalLink />
+                <span>Demo</span>
+              </motion.a>
+              <motion.a
+                href={project.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-5 py-2 border border-blue-600 text-white rounded-full text-sm font-semibold hover:bg-blue-700 transition-colors"
+              >
+                <FiGithub />
+                <span>Code</span>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-      
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>{project.description}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag, tagIndex) => (
-            <span key={tagIndex} className={`px-2 py-1 rounded-md text-xs font-medium ${
-              darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
-            }`}>
+
+      <div className="p-6 md:p-7 flex flex-col flex-grow">
+        <h3 className={`text-xl md:text-2xl font-semibold mb-2 ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+          {project.title}
+        </h3>
+        <p className={`text-sm md:text-base ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-4 line-clamp-3 min-h-[3.75rem] flex-grow`}>
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-2 mt-auto pt-4">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className={`px-3 py-1 rounded-full text-xs font-medium ${tagStyle} transition-colors duration-200`}
+            >
               {tag}
             </span>
           ))}
         </div>
-        <div className="flex gap-4">
-          <a href={project.demoUrl} className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1">
-            <span>Xem demo</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-            </svg>
-          </a>
-          <a href={project.codeUrl} className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1">
-            <span>Mã nguồn</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H3a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </a>
-        </div>
       </div>
     </motion.div>
   );
-} 
+}
