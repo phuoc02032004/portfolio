@@ -1,5 +1,6 @@
 import pos from "@/../public/assets/images/pos.png";
 import savile from "@/../public/assets/images/savile.png";
+import shoes from "@/../public/assets/images/shoe.jpeg";
 
 export const projects = [
   {
@@ -13,12 +14,12 @@ export const projects = [
   },
   {
     id: 2,
-    title: "E-commerce Platform",
-    description: "Silverware e-commerce platform with shopping cart, checkout and product management features.",
-    image: "/project2.jpg",
-    tags: ["ReactJS", "ExpressJS", "MongoDB"],
-    demoUrl: "https://example.com/demo2",
-    codeUrl: "https://github.com/phuoc02032004/Nhom06-CNTT_VAA.git"
+    title: "Shoes Store",
+    description: "Shoes Shop is an online shoe retail platform designed to provide customers with a modern and convenient shopping experience. The project focuses on clear product display, quick search, smart shopping cart and integrated automatic order management system. With a diverse product inventory, from famous brands to custom-designed shoe lines, Shoes Shop meets all customers' style and usage needs.",
+    image: shoes,
+    tags: ["ReactJS", "ExpressJS", "MongoDB", "Cloudinary", "Tailwind", "Shand-"],
+    demoUrl: "https://shoes-store-fe-alpha.vercel.app/home",
+    codeUrl: "https://github.com/phuoc02032004/shoes-store-fe"
   },
   {
     id: 3,
