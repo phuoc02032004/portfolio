@@ -8,7 +8,7 @@ export const projects = [
     title: "COFFEE SHOP MANAGEMENT",
     description: "Modern admin interface with intuitive charts and data analysis features.",
     image: pos,
-    tags: ["NextJS", "NestJS", "PostgreSQL", "CI/CD","AWS EC2" ,"AWS S3", "MUI"],
+    tags: ["NextJS", "NestJS", "PostgreSQL", "CI/CD","AWS EC2" ,"AWS S3", "MUI", "Tailwind"],
     demoUrl: "https://admin-bpc-pos.nibies.space/",
     codeUrl: "https://github.com/BPC-POS/admin"
   },
@@ -17,7 +17,7 @@ export const projects = [
     title: "Shoes Store",
     description: "Shoes Shop is an online shoe retail platform designed to provide customers with a modern and convenient shopping experience. The project focuses on clear product display, quick search, smart shopping cart and integrated automatic order management system. With a diverse product inventory, from famous brands to custom-designed shoe lines, Shoes Shop meets all customers' style and usage needs.",
     image: shoes,
-    tags: ["ReactJS", "ExpressJS", "MongoDB", "Cloudinary", "Tailwind", "Shand-"],
+    tags: ["NextJS", "ExpressJS", "MongoDB", "Cloudinary", "Tailwind", "Shadcn-UI"],
     demoUrl: "https://shoes-store-fe-alpha.vercel.app/home",
     codeUrl: "https://github.com/phuoc02032004/shoes-store-fe"
   },
