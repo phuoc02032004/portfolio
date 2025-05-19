@@ -3,6 +3,7 @@ import { projects } from "@/data/projects";
 import ProjectCard from "@/components/ui/ProjectCard"; 
 import SectionHeading from "@/components/ui/SectionHeading";
 
+
 interface ProjectsSectionProps {
   darkMode: boolean;
 }
