@@ -5,6 +5,7 @@ import BlurText from "@/blocks/TextAnimations/BlurText/BlurText";
 
 interface HeroSectionProps {
   darkMode: boolean;
+  isMobile?: boolean;
 }
 
 export default function HeroSection({ darkMode }: HeroSectionProps) {

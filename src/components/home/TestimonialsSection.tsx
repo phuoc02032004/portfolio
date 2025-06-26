@@ -1,5 +1,5 @@
 import { testimonials } from "@/data/testimonials";
-import TestimonialCard from "@/components/ui/TestimonialCard";
+import TestimonialCard from "@/components/Cards/TestimonialCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 interface TestimonialsSectionProps {

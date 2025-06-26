@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { skillCategories, skillLevels } from "@/data/skills";
-import SkillCard from "@/components/ui/SkillCard";
+import SkillCard from "@/components/Cards/SkillCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 
 interface SkillsSectionProps {

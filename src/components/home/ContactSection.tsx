@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { personalInfo } from "@/data/personalInfo";
-import ContactForm from "@/components/ui/ContactForm";
+import ContactForm from "@/components/form/ContactForm";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi"; 
 

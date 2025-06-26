@@ -5,7 +5,6 @@ import { FiExternalLink, FiGithub } from "react-icons/fi";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -119,41 +118,81 @@ export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
           </div>
         </motion.div>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg font-poppins">
+      <DialogContent className="max-w-2xl md:bg-transparent bg-white border-none dark:bg-gray-900 rounded-lg shadow-lg font-poppins">
         <DialogHeader className="mb-4">
           <DialogTitle className="text-xl text-center font-bold font-poppins">{project.title}</DialogTitle>
-          <DialogDescription className="text-center">{project.description}</DialogDescription>
         </DialogHeader>
-        <div className="flex flex-wrap gap-2 align-center justify-center ">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800"
+         <div className="min-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+      {/* Project Image */}
+      {project.image && (
+        <img
+          className="w-full md:h-50 object-cover object-center" // Điều chỉnh h-64 nếu cần
+          src={typeof project.image === 'object' ? project.image.src : project.image}
+          alt={project.title || 'Project image'}
+        />
+      )}
+
+      <div className="p-6 md:p-8">
+        {/* Project Description */}
+        <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+          {project.description || 'A detailed description of the project goes here, explaining its purpose, features, and the technologies used.'}
+        </p>
+
+        {/* Tags */}
+        {project.tags && project.tags.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">
+              Technologies Used
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 rounded-full text-xs font-semibold
+                             bg-sky-100 text-sky-700
+                             dark:bg-sky-700 dark:text-sky-100
+                             hover:bg-sky-200 dark:hover:bg-sky-600 transition-colors"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5"
             >
-              {tag}
-            </span>
-          ))}
+              <FiExternalLink size={18} />
+              <span>View Demo</span>
+            </a>
+          )}
+          {project.codeUrl && (
+            <a
+              href={project.codeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-6 py-3 
+                         bg-gray-700 text-white
+                         dark:bg-gray-600 dark:text-gray-100 
+                         rounded-lg text-sm font-semibold shadow-md 
+                         hover:bg-gray-800 dark:hover:bg-gray-500 
+                         focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 
+                         transition-all duration-200 ease-in-out transform hover:-translate-y-0.5"
+            >
+              <FiGithub size={18} />
+              <span>Source Code</span>
+            </a>
+          )}
         </div>
-        <div className="mt-4 flex gap-4 justify-center">
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold shadow-md hover:bg-blue-700 transition-colors"
-          >
-            <FiExternalLink />
-            <span>Demo</span>
-          </a>
-          <a
-            href={project.codeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2 border border-gray-600 text-white rounded-full text-sm font-semibold bg-slate-400 hover:bg-blue-700 transition-colors"
-          >
-            <FiGithub />
-            <span>Code</span>
-          </a>
-        </div>
+      </div>
+    </div>
       </DialogContent>
     </Dialog>
   );

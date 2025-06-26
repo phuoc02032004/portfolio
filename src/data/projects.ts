@@ -1,10 +1,20 @@
 import pos from "@/../public/assets/images/pos.png";
 import savile from "@/../public/assets/images/savile.png";
 import shoes from "@/../public/assets/images/shoe.jpeg";
+import apple from '@/../public/assets/images/apple.png'
 
 export const projects = [
   {
     id: 1,
+    title: "AppleGear",
+    description: "Apple Store Remake.",
+    image: apple,
+    tags: ["ReactJS", "NodeJS", "MongoDB","Cloudinary" ,"CI/CD","Vercel" ,"Shand UI", "MUI", "Tailwind"],
+    demoUrl: "https://store-phone-fe.vercel.app/",
+    codeUrl: "https://github.com/phuoc02032004/store-phone-fe"
+  },
+  {
+    id: 2,
     title: "COFFEE SHOP MANAGEMENT",
     description: "Modern admin interface with intuitive charts and data analysis features.",
     image: pos,
@@ -13,7 +23,7 @@ export const projects = [
     codeUrl: "https://github.com/BPC-POS/admin"
   },
   {
-    id: 2,
+    id: 3,
     title: "Shoes Store",
     description: "Shoes Shop is an online shoe retail platform designed to provide customers with a modern and convenient shopping experience. The project focuses on clear product display, quick search, smart shopping cart and integrated automatic order management system. With a diverse product inventory, from famous brands to custom-designed shoe lines, Shoes Shop meets all customers' style and usage needs.",
     image: shoes,
@@ -22,7 +32,7 @@ export const projects = [
     codeUrl: "https://github.com/phuoc02032004/shoes-store-fe"
   },
   {
-    id: 3,
+    id: 4,
     title: "Savile - LMS",
     description: "Savile LMS is an intuitive and powerful Learning Management System designed to simplify the creation, delivery and tracking of training programs. With a user-friendly interface, Savile LMS helps organizations easily manage learning content, track user progress and evaluate effectiveness, thereby optimizing the training experience and results.",
     image: savile,

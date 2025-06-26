@@ -8,7 +8,7 @@ import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import ContactSection from "@/components/home/ContactSection";
-import FullScreenWhiteOverlay from '@/components/ui/FullScreenWhiteOverlay';
+import FullScreenWhiteOverlay from '@/components/layouts/FullScreenWhiteOverlay';
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -16,18 +16,32 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [, setIsLoading] = useState(true);
   const [, setShowLoading] = useState(true);
-  const [showOverlay, setShowOverlay] = useState(true); 
+  const [showOverlay, setShowOverlay] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
+    const overlayTimeout = isMobile ? 1000 : 2000;
+    const transitionTimeout = isMobile ? 500 : 1000;
+    
     setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => {
         setShowLoading(false);
         setTimeout(() => { 
           setShowOverlay(false);
-        }, 2000 + 1000); 
+        }, transitionTimeout); 
       }, 800);
-    }, 1000);
+    }, overlayTimeout);
   }, []);
 
   const handleOpenSideBar = (originX: number, originY: number) => {
