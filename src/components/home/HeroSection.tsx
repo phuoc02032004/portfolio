@@ -86,35 +86,14 @@ export default function HeroSection({ darkMode }: HeroSectionProps) {
         className="absolute inset-0 z-0 w-full h-full overflow-hidden"
       >
         {/* ... (Giữ nguyên các element background) ... */}
-         <div className={`absolute inset-0 ${darkMode ? 'opacity-15' : 'opacity-10'}`} // Tăng nhẹ opacity grid
-          style={{
-            backgroundImage: 'radial-gradient(circle, #3b82f6 1px, transparent 1px)',
-            backgroundSize: '40px 40px' // Tăng size grid
-          }}>
-        </div>
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-cyan-500 blur-2xl opacity-25 animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-600 blur-2xl opacity-20"></div>
-        <div className="absolute top-1/2 left-1/3 w-60 h-60 rounded-full bg-indigo-500 blur-2xl opacity-15 animate-pulse delay-500"></div>
-        <motion.div
-          animate={{ y: [0, 15, 0], rotate: [0, 5, 0], scale: [1, 1.05, 1] }}
-          transition={{ duration: 7, repeat: Infinity, repeatType: "reverse" }}
-          className="absolute top-1/3 right-1/4 w-24 h-24 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 opacity-15 shadow-xl"
-        ></motion.div>
-        <motion.div
-          animate={{ y: [0, -20, 0], rotate: [0, -5, 0], scale: [1, 1.03, 1] }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse", delay: 1 }}
-          className="absolute bottom-1/3 left-1/4 w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 to-indigo-500 opacity-15 shadow-xl"
-        ></motion.div>
-        <motion.div
-          animate={{ y: [0, 12, 0], rotate: [0, -3, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
-          className="absolute top-1/2 right-1/3 w-16 h-16 rounded-lg bg-gradient-to-tr from-blue-400 to-indigo-600 opacity-15 shadow-xl"
-        ></motion.div>
-         <motion.div
-          animate={{ y: [0, -10, 0], rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 9, repeat: Infinity, repeatType: "reverse", delay: 1.5 }}
-          className="absolute bottom-1/2 left-1/3 w-12 h-12 rounded-full bg-gradient-to-bl from-cyan-500 to-blue-700 opacity-10 shadow-lg"
-        ></motion.div>
+        <video
+          src="/videos/blackhole.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       </motion.div>
 
       {/* Scroll Down Indicator */}

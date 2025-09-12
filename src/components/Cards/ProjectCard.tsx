@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
+import { memo } from "react";
 import Image from "next/image";
 import { FiExternalLink, FiGithub } from "react-icons/fi";
 import {
@@ -23,7 +24,7 @@ interface ProjectCardProps {
   darkMode: boolean;
 }
 
-export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
+const ProjectCard = ({ project, darkMode }: ProjectCardProps) => {
   const cardBg = darkMode
     ? "bg-gradient-to-br from-gray-800 to-gray-850"
     : "bg-gradient-to-br from-white to-gray-50";
@@ -125,10 +126,13 @@ export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
          <div className="min-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
       {/* Project Image */}
       {project.image && (
-        <img
-          className="w-full md:h-50 object-cover object-center" // Điều chỉnh h-64 nếu cần
-          src={typeof project.image === 'object' ? project.image.src : project.image}
+        <Image
+          src={project.image}
           alt={project.title || 'Project image'}
+          width={800}
+          height={450}
+          className="w-full h-auto object-cover object-center"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       )}
 
@@ -178,12 +182,12 @@ export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
               href={project.codeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-6 py-3 
+              className="flex items-center justify-center gap-2 px-6 py-3
                          bg-gray-700 text-white
-                         dark:bg-gray-600 dark:text-gray-100 
-                         rounded-lg text-sm font-semibold shadow-md 
-                         hover:bg-gray-800 dark:hover:bg-gray-500 
-                         focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 
+                         dark:bg-gray-600 dark:text-gray-100
+                         rounded-lg text-sm font-semibold shadow-md
+                         hover:bg-gray-800 dark:hover:bg-gray-500
+                         focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50
                          transition-all duration-200 ease-in-out transform hover:-translate-y-0.5"
             >
               <FiGithub size={18} />
@@ -196,4 +200,6 @@ export default function ProjectCard({ project, darkMode }: ProjectCardProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default memo(ProjectCard);

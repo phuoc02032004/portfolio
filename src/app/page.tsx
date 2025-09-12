@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Header from "@/components/layouts/Header";
 import Sidebar from "@/components/layouts/Sidebar";
+import dynamic from 'next/dynamic';
 
 import HeroSection from "@/components/home/HeroSection";
-import AboutSection from "@/components/home/AboutSection";
-import ProjectsSection from "@/components/home/ProjectsSection";
-import ContactSection from "@/components/home/ContactSection";
+const AboutSection = dynamic(() => import('@/components/home/AboutSection'));
+const ProjectsSection = dynamic(() => import('@/components/home/ProjectsSection'));
+const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
 import FullScreenWhiteOverlay from '@/components/layouts/FullScreenWhiteOverlay';
 
 export default function Home() {
@@ -44,10 +45,10 @@ export default function Home() {
     }, overlayTimeout);
   }, []);
 
-  const handleOpenSideBar = (originX: number, originY: number) => {
+  const handleOpenSideBar = useCallback((originX: number, originY: number) => {
     setOriginPosition({ x: originX, y: originY });
     setIsSidebarOpen(true);
-  };
+  }, []);
 
   const handleCloseSideBar = () => {
     setIsSidebarOpen(false);
