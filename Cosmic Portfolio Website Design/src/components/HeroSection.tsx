@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { personalInfo } from '@/data/personalInfo';
+import { motion } from 'motion/react';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Rocket, Sparkles } from 'lucide-react';
 
-export default function HeroSection() {
+export function HeroSection() {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const fullText = "Building stellar web experiences across the digital universe";
@@ -19,8 +19,8 @@ export default function HeroSection() {
   }, [currentIndex, fullText]);
 
   return (
-    <section className="h-screen flex flex-col items-center justify-end relative px-6 py-20 overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center relative z-10">
+    <section className="min-h-screen flex items-center justify-center relative px-6 py-20">
+      <div className="max-w-4xl mx-auto text-center">
         {/* Avatar */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
@@ -29,17 +29,17 @@ export default function HeroSection() {
           className="relative mx-auto mb-8 w-48 h-48"
         >
           <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-purple-500/50 shadow-2xl shadow-purple-500/25">
-            <img
+            <ImageWithFallback
               src="https://images.unsplash.com/photo-1576174464184-fb78fe882bfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx8fDE3NTg2NzgxMTF8MA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Astronaut Avatar"
               className="w-full h-full object-cover"
             />
           </div>
-
+          
           {/* Glowing ring effect */}
           <div className="absolute inset-0 rounded-full border-2 border-purple-400/30 animate-pulse"></div>
           <div className="absolute -inset-2 rounded-full border border-blue-400/20 animate-spin" style={{ animationDuration: '8s' }}></div>
-
+          
           {/* Floating icons */}
           <motion.div
             animate={{ rotate: 360 }}
@@ -65,10 +65,10 @@ export default function HeroSection() {
           className="mb-6"
         >
           <h1 className="text-6xl mb-2 bg-gradient-to-r from-purple-400 via-blue-300 to-purple-400 bg-clip-text text-transparent">
-            {personalInfo.name}
+            Alex Cosmos
           </h1>
           <h2 className="text-2xl text-gray-300 tracking-wide">
-            {personalInfo.role}
+            Frontend Developer
           </h2>
         </motion.div>
 

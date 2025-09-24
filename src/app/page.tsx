@@ -10,6 +10,7 @@ const AboutSection = dynamic(() => import('@/components/home/AboutSection'));
 const ProjectsSection = dynamic(() => import('@/components/home/ProjectsSection'));
 const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
 import FullScreenWhiteOverlay from '@/components/layouts/FullScreenWhiteOverlay';
+import { CosmicBackground } from '@/components/home/CosmicBackground';
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,14 +34,14 @@ export default function Home() {
   useEffect(() => {
     const overlayTimeout = isMobile ? 1000 : 2000;
     const transitionTimeout = isMobile ? 500 : 1000;
-    
+
     setTimeout(() => {
       setIsLoading(false);
       setTimeout(() => {
         setShowLoading(false);
-        setTimeout(() => { 
+        setTimeout(() => {
           setShowOverlay(false);
-        }, transitionTimeout); 
+        }, transitionTimeout);
       }, 800);
     }, overlayTimeout);
   }, []);
@@ -53,19 +54,19 @@ export default function Home() {
   const handleCloseSideBar = () => {
     setIsSidebarOpen(false);
   };
-  
+
   useEffect(() => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setDarkMode(true);
     }
-    
+
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       setDarkMode(e.matches);
     };
-    
+
     darkModeMediaQuery.addEventListener('change', handleChange);
-    
+
     return () => {
       darkModeMediaQuery.removeEventListener('change', handleChange);
     };
@@ -75,16 +76,25 @@ export default function Home() {
     <div className={darkMode ? "dark" : ""}>
       <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
         {showOverlay && <FullScreenWhiteOverlay />}
+        <video
+          src="/videos/blackhole.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+        <CosmicBackground />
         <Header handleOpenSidebar={handleOpenSideBar} />
         <Sidebar
-            isOpen={isSidebarOpen}
-            onClose={handleCloseSideBar}
-            originPosition={originPosition}
-            darkMode={darkMode}
+          isOpen={isSidebarOpen}
+          onClose={handleCloseSideBar}
+          originPosition={originPosition}
+          darkMode={darkMode}
         />
-        
+
         <main className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
-          <HeroSection darkMode={darkMode} />
+          <HeroSection />
           <AboutSection darkMode={darkMode} />
           <ProjectsSection darkMode={darkMode} />
           <ContactSection darkMode={darkMode} />
