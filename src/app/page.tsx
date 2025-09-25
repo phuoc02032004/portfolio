@@ -77,7 +77,7 @@ export default function Home() {
       <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors duration-300`}>
         {showOverlay && <FullScreenWhiteOverlay />}
         <video
-          src="/videos/blackhole.webm"
+          src="/videos/blackhole.mp4"
           autoPlay
           loop
           muted
